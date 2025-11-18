@@ -18,6 +18,17 @@ class RequestLog(models.Model):
         verbose_name="Timestamp",
         auto_now_add=True
     )
+    
+    country = models.CharField(
+        max_length=100, 
+        null=True, 
+        blank=True
+    )
+    city = models.CharField(
+        max_length=100, 
+        null=True, 
+        blank=True
+    )
 
     class Meta:
         verbose_name = "Request Log"
@@ -25,7 +36,7 @@ class RequestLog(models.Model):
         ordering = ['-timestamp']
 
     def __str__(self):
-        return f"[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}] {self.ip_address} - {self.path}"
+        return f"[{self.timestamp.strftime('%H:%M:%S')}] {self.ip_address} ({self.city}, {self.country}) - {self.path}"
     
 
 class BlockedIP(models.Model):
