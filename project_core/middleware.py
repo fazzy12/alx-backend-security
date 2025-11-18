@@ -1,10 +1,15 @@
 # ip_tracking/middleware.py
-from .models import RequestLog
+from django.http import HttpResponseForbidden
+from .models import RequestLog, BlockedIP
 from django.utils import timezone
 import threading
 import logging
 
 logger = logging.getLogger(__name__)
+
+BLOCKED_IP_CACHE = set()
+CACHE_LAST_UPDATED = None
+CACHE_TTL_SECONDS = 300
 
 class BasicIPLoggingMiddleware:
     def __init__(self, get_response):

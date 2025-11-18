@@ -26,3 +26,30 @@ class RequestLog(models.Model):
 
     def __str__(self):
         return f"[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}] {self.ip_address} - {self.path}"
+    
+
+class BlockedIP(models.Model):
+    """
+    Model to store IP addresses that should be blocked from accessing the site.
+    """
+    ip_address = models.GenericIPAddressField(
+        verbose_name="IP Address",
+        unique=True,
+    )
+    
+    reason = models.CharField(
+        max_length=255, 
+        blank=True, 
+        default="General Blacklist"
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        verbose_name = "Blocked IP"
+        verbose_name_plural = "Blocked IPs"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.ip_address} (Reason: {self.reason})"
