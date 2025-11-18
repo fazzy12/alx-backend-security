@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ratelimit.middleware.RateLimitMiddleware',
     'ip_tracking.middleware.BasicIPLoggingMiddleware',
 ]
 
@@ -130,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-ip-rate-limit-cache',
         'LOCATION': 'unique-ip-geolocation-cache',
     },
     'geolocation_cache': {
